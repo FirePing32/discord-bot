@@ -1,6 +1,8 @@
 from os import environ
 from dotenv import load_dotenv
-import random, json, requests
+import random
+import json
+import requests
 
 load_dotenv()
 
@@ -14,11 +16,11 @@ for channel in channels:
   channel_id = random.choice(channels)
   baseURL = f"https://discordapp.com/api/channels/{channel_id}/messages"
   headers = {"Authorization": environ.get("AUTH_TOKEN"),
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:94.0) Gecko/20100101 Firefox/94.0",
-            "Content-Type": "application/json", }
+             "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:94.0) Gecko/20100101 Firefox/94.0",
+             "Content-Type": "application/json", }
 
-  message = messages[0]
+  message = messages[1]
   POSTedJSON = json.dumps({"content": message})
 
-  r = requests.post(baseURL, headers= headers, data = POSTedJSON)
+  r = requests.post(baseURL, headers=headers, data=POSTedJSON)
   print(r)
