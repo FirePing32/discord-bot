@@ -1,10 +1,10 @@
 # import requests
 # import json
-#from os import environ
 from os import environ
 import discord
+from discord.ext import tasks
 from dotenv import load_dotenv
-import time, random
+import random
 
 load_dotenv()
 
@@ -28,16 +28,16 @@ for channel in channels:
   time.sleep(10)
   """
 
-class MyClient(discord.Client):
-    async def on_ready(self):
-        print('Logged in as')
-        print(self.user.name)
-        print(self.user.id)
-        print('------')
-        message = random.choice(messages)
-        channel_id = random.choice(channels)
-        channel = client.get_channel(channel_id)
-        await channel.send(message)
+client = discord.Client()
 
-client = MyClient()
+@tasks.loop(minutes=5)
+async def background():
+   await client.wait_until_ready()
+   channel = client.get_channel(random.choice(channels))
+   await channel.send(random.choice(messages))
+
+@client.event
+async def on_ready():
+    background.start()
+
 client.run(environ.get('BOT_TOKEN'))
