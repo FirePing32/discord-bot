@@ -5,7 +5,7 @@ on:
     - cron: "0 12 */1 * *"
 
 jobs:
-  Streak:
+  Daily:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +20,7 @@ jobs:
           pip install -r requirements.txt
       - name: Execute script
         run: |
-          python streak.py
+          python bot.py
         env:
           AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+          COMMAND: ${{ secrets.PLS_DAILY }}

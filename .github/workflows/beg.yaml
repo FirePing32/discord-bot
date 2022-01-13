@@ -1,0 +1,26 @@
+name: Beg
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+
+jobs:
+  Beg:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repo content
+        uses: actions/checkout@v2
+      - name: setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+      - name: Execute script
+        run: |
+          python bot.py
+        env:
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+          COMMAND: ${{ secrets.PLS_BEG }}
